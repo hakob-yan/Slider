@@ -1,7 +1,9 @@
 import ReactSlider from 'react-slider';
 import styled from 'styled-components';
+export const LENGTH = 500;
+
 export const StyledSlider = styled(ReactSlider)`
-    width: 500px; 
+    width: ${LENGTH}px;
     height: 25px;
     margin:0 32px;
     margin-top:10px;
@@ -34,7 +36,6 @@ export const StyledTrack = styled.div`
 export const Slider = styled.div`
    width:auto;
    position: relative;
-   background-color:red;
    display:inline-block;
    margin:100px;
   `;

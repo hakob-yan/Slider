@@ -1,8 +1,11 @@
 import styled from "styled-components"
+import { LENGTH } from '../Slider/SliderStyled'
+type Props = {
+    price: number
+}
 
-
-export const Input = styled.input`
-  
+export const Input = styled.input<Props>`
+    margin-left:${props => ((props.price / 100) * LENGTH - 3)}px;
     position:relative;
     width:70px;
     border-radius:5px;
