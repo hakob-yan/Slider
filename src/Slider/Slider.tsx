@@ -1,43 +1,42 @@
 import React, { useState } from 'react';
-import { Input } from '../Input/Input';
-import { Slider, StyledSlider, StyledThumb, StyledTrack } from './SliderStyled';
-
-
-const Track = (props: any, state: any) => {
-  return <StyledTrack {...props} index={state.index} />}
-
-const Thumb = (props: any, state: any) => <StyledThumb {...props} />
+import * as S from './SliderStyled';
+import { Thumb, Track } from "./utils"
+interface IProps { min: number, max: number, price: number, setPrice: any, currency: string }
 
 
 
-
-
-const Slidermain = ({ min, max, price, setPrice }: { min: number, max: number, price: number, setPrice: any }) => {
-
+export const Slider = ({ min, max, price, setPrice, currency }: IProps) => {
+  const [writted, setWritted] = useState(`${price}`);
   const handleChangeLeft = (value: number | readonly number[]): void => {
+    setWritted(String(value))
     if (typeof value === 'number') {
-      setPrice(value);
-      console.log(price);
+      setWritted(String((value / 100) * (max - min) + min))
+      setPrice((value / 100) * (max - min) + min)
     }
   }
 
-  return (
-    <Slider >
-      <Input
-        max={max}
-        min={min}
-        currency='$'
-        setPrice={setPrice}
-        price={price}
+  const handleInput = (e: any) => {
+    const value = e.target.value.slice(1);
+    if (+value > max) { setWritted(String(max)); }
+    else
+      if (+value < min) { setWritted(String(min)); }
+      else {
+        setWritted(value);
+      }
+  }
+        return (
+          <S.Wrapper>
+            <S.Input
+              onChange={handleInput}
+              value={`${currency}${writted}`} price={(price - min) / (max - min) * 100} />
+            <S.Slider
+              value={(price - min) / (max - min) * 100}
+              onChange={handleChangeLeft}
+              renderTrack={Track}
+              renderThumb={Thumb} />
+            <S.Warning hidden >PLease, write a valid number</S.Warning>
+          </S.Wrapper >
 
-      />
-      <StyledSlider
-        value={price}
-        onChange={handleChangeLeft}
-        renderTrack={Track}
-        renderThumb={Thumb} />
-    </Slider>
-  );
-}
-
-export default Slidermain;
+        );
+      }
+  

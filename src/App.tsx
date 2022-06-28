@@ -1,7 +1,16 @@
 import { useState } from "react"
-import Slider from "./Slider/Slider"
+import { Slider } from "./Slider/Slider"
 
 export const App = () => {
-    const [value, setPrice] = useState(200)
-    return <Slider price={value} setPrice={setPrice} min={0} max={5} />
+    const [price, setPrice] = useState<number>(30);
+
+    return (
+        <Slider
+            price={price}
+            setPrice={setPrice}
+            min={30}
+            max={400}
+            currency='$'
+        />
+    );
 }
