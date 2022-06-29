@@ -7,33 +7,47 @@ interface IProps { min: number, max: number, price: number, setPrice: any, curre
 
 export const Slider = ({ min, max, price, setPrice, currency }: IProps) => {
   const [writted, setWritted] = useState(`${price}`);
+  const [hide, setHide] = useState(true);
   const handleInput = (e: any) => {
-    const value = e.target.value.slice(1);
-    if (value <= min && isValid(value)) { setPrice(min) };
-    if (value >= max && isValid(value)) { setPrice(max) };
-    if (value > min && value < max ) { setPrice(value) };
+
+    let value = e.target.value.slice(1, 5);
+    const zero = value[1] == 0;
+ 
+    const io = Number(value);
+    if (io !== NaN && io >= min) { setHide(true) }
+    else setHide(false);
+    if (value <= min && isValid(value)) { setPrice(min) } else
+      if (value >= max && isValid(value)) { setPrice(max) } else
+        if (value > min && value < max) { setPrice(value) };
+
 
 
     if (+value > max) { setWritted(String(max)); }
     else
       if (+value < min) { setWritted(String(value)); }
       else {
-        setWritted(value);
+        if ((+value || +value === 0)) {
+          setWritted(value);
+        }
+        // setWritted(value);
+
       }
+    console.log(value);
 
-
+    if (zero) { setWritted(value[0]); setPrice(value[0]); console.log("zero"); }
   }
 
   const handleSlider = (value: number | readonly number[]): void => {
     setWritted(String(value))
     if (typeof value === 'number') {
-      setWritted(String((value / 100) * (max - min) + min))
+      setHide(true);
+      setWritted(String((value / 100) * (max - min) + min).slice(0, 4))
       setPrice((value / 100) * (max - min) + min)
     }
   }
 
-  console.log("writted", writted);
-  console.log("price", price);
+  // console.log("writted", writted);
+  // console.log("price", price);
   return (
     <S.Wrapper>
       <S.Input
@@ -44,7 +58,7 @@ export const Slider = ({ min, max, price, setPrice, currency }: IProps) => {
         onChange={handleSlider}
         renderTrack={Track}
         renderThumb={Thumb} />
-      <S.Warning hidden >PLease, write a valid number</S.Warning>
+      <S.Warning hidden={hide} >PLease, write a valid number</S.Warning>
     </S.Wrapper >
 
   );
