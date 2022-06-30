@@ -7,30 +7,29 @@ export const Slider = styled(ReactSlider)`
     height: 25px;
     margin:0 32px;
     margin-top:10px;
-    
+   
 `;
 
 export const Thumb = styled.div`
-
-    height: 25px;
+    height: 16px;
     line-height: 25px;
-    width: 5px;
+    width: 16px;
     text-align: center;
     background-color: #000;
     color: #fff;
     border-radius: 10px;
     cursor: grab;
     font-size:10px;
+    margib-top:0px;
 `;
 
 
-export const Track = styled.div`
-    top: 0 ;
+export const Track = styled.div<{ index: number }>`
+    top: 6px;
     bottom: 0;
-    background: ${(props: any) => (props.index === 1 ? '#DCDCDC' : '#FF69B4')};
-    border - radius: 999px;
-  
-  
+    height:5px;
+    background: ${({ index }) => (index === 1 ? '#DCDCDC' : '#000')};
+    border-radius: 999px;
 `;
 
 export const Wrapper = styled.div`
@@ -38,29 +37,25 @@ export const Wrapper = styled.div`
    position: relative;
    display:inline-block;
    margin:100px;
-  `;
+`;
 
 export const Warning = styled.div`
-margin-left:50px;
-color:red;
-transition:all 300ms ease;
-  `
+    margin-left:50px;
+    color:red;
+    transition:all 300ms ease;
+`;
 
 
-type Props = {
-    price: number
-}
-
-export const Input = styled.input<Props>`
-    margin-left:${props => ((props.price / 100) * LENGTH)}px;
+export const Input = styled.input<{ price: number }>`
+    margin-left:${props => ((props.price / 104) * LENGTH + 4)}px;
     position:relative;
     width:70px;
-    border-radius:5px;
     height:30px;
     font-weight:bold;
-    font-size:24px;
+    font-size:20px;
     outline:none;
     align-items:center;
-    border:1px solid black;
+    border:1px solid gray;
     background-color:#fff;
+    text-align:center;
 `

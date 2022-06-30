@@ -8,8 +8,8 @@ export const App = () => {
         <Slider
             price={price}
             setPrice={setPrice}
-            min={0}
-            max={5}
+            min={1}
+            max={50}
             currency='$'
         />
     );
